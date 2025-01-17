@@ -3,10 +3,14 @@ using UnityEngine.InputSystem;
 
 public class CharacterController : MonoBehaviour
 {
-    [SerializeField] private float movementSpeed;
-    [SerializeField] private float boostSpeed;
-    [SerializeField] private InputActionReference moveActionReference;
-    [SerializeField] private InputActionReference boostActionReference;
+    [SerializeField] 
+    private float movementSpeed;
+    [SerializeField] 
+    private float boostSpeed;
+    [SerializeField] 
+    private InputActionReference moveActionReference;
+    [SerializeField] 
+    private InputActionReference boostActionReference;
 
     private Animator animator;
 
@@ -40,7 +44,7 @@ public class CharacterController : MonoBehaviour
         if (frameMovement3D.sqrMagnitude > 0.01f) // Vérifie un mouvement significatif
         {
             Quaternion targetRotation = Quaternion.LookRotation(frameMovement3D.normalized, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
 
         // Gestion du booléen "IsMoving" dans l'Animator
@@ -49,11 +53,4 @@ public class CharacterController : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
-        {
-            Destroy(other.gameObject);
-        }
-    }
 }

@@ -1344,51 +1344,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &9040603930219218488
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2705437487552858967}
-  - component: {fileID: 7636915594841591833}
-  m_Layer: 0
-  m_Name: Satellites
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2705437487552858967
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9040603930219218488}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6486946567613621998}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7636915594841591833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9040603930219218488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2532eaeb5162dd143b1463cf3fd9e6cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 100
 --- !u!1 &9139489664419784910
 GameObject:
   m_ObjectHideFlags: 0
@@ -1424,7 +1379,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4450705037486565494}
-  - {fileID: 2705437487552858967}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7450327261797010771
@@ -1509,7 +1463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1191362ff548f064191bc468cd138017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 4
+  movementSpeed: 6
   boostSpeed: 10
   moveActionReference: {fileID: 6800092525090821347, guid: b60ed40318ad0bb41b96b9609ca0ed14, type: 3}
   boostActionReference: {fileID: -6117572893210435004, guid: b60ed40318ad0bb41b96b9609ca0ed14, type: 3}
@@ -1525,8 +1479,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e26a8ada2e97344e9f899cb802ffecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  satelliteCount: 0
+  satelliteCount: 3
   satellitePrefab: {fileID: 8118963732262246295, guid: 5a267822f4bdd3345a43681f6d08cafb, type: 3}
-  satellitesParent: {fileID: 2705437487552858967}
+  satellitesParent: {fileID: 0}
   maxSatellites: 10
   orbitRadius: 2
