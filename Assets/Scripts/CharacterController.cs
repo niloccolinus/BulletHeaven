@@ -47,4 +47,13 @@ public class CharacterController : MonoBehaviour
         bool isMoving = frameMovement3D.sqrMagnitude > 0.01f; // True si le personnage se déplace
         animator.SetBool("IsMoving", isMoving);
     }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            Destroy(other.gameObject);
+        }
+    }
 }

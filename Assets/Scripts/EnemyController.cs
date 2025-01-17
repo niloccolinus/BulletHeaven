@@ -5,6 +5,11 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private Transform player;
     [SerializeField] private float speed;
+    
+    private void Start()
+    {
+        player = FindFirstObjectByType<CharacterController>().transform;
+    }
 
     void Update()
     {
@@ -18,4 +23,5 @@ public class EnemyController : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
         transform.rotation = rotation;
     }
+
 }
