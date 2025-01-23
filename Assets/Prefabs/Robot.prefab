@@ -1464,10 +1464,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1191362ff548f064191bc468cd138017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 6
-  boostSpeed: 10
-  moveActionReference: {fileID: 6800092525090821347, guid: b60ed40318ad0bb41b96b9609ca0ed14, type: 3}
-  boostActionReference: {fileID: -6117572893210435004, guid: b60ed40318ad0bb41b96b9609ca0ed14, type: 3}
+  _movementSpeed: 5
+  _boostSpeed: 10
+  _moveActionReference: {fileID: 6800092525090821347, guid: b60ed40318ad0bb41b96b9609ca0ed14, type: 3}
+  _boostActionReference: {fileID: -6117572893210435004, guid: b60ed40318ad0bb41b96b9609ca0ed14, type: 3}
 --- !u!114 &1613378965928439190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1497,4 +1497,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4352de81fcf73e4439e6e4f6eb9cd9fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 5
+  _maxHealth: 100
+  _currentHealth: 0

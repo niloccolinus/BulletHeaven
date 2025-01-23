@@ -11,9 +11,6 @@ public class SceneLoader : MonoBehaviour
 
     public void StartGame()
     {
-        // disable ui
-        _mainMenuPanel.SetActive(false);
-
         // load scene asynchronously 
         StartCoroutine(LoadGameScene());
     }
@@ -26,6 +23,9 @@ public class SceneLoader : MonoBehaviour
         {
             yield return null;
         }
+
+        // disable ui
+        if (_mainMenuPanel != null) _mainMenuPanel.SetActive(false);
 
         // set new scene as active once loaded
         Scene newScene = SceneManager.GetSceneByName(_gameSceneName);

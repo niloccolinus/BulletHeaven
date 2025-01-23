@@ -5,6 +5,8 @@ public class HitOtherOnCollision : MonoBehaviour
     [SerializeField]
     private int _damage;
     [SerializeField]
+    private float _pushForce;
+    [SerializeField]
     private bool _destroyItself = false;
     [SerializeField]
     private bool _isEnemy = true;
@@ -16,7 +18,22 @@ public class HitOtherOnCollision : MonoBehaviour
             // if projectile or weapon
             if (other.CompareTag("Enemy"))
             {
-                other.GetComponent<Health>().LoseHealth(_damage);
+                // TODO : apply push force
+                Health enemyHealth = other.GetComponent<Health>();
+                if (enemyHealth != null)
+                {
+                    enemyHealth.LoseHealth(_damage);
+
+                    // grant rewards if enemy is dead
+                    if (enemyHealth.IsDead)
+                    {
+                        Scoring enemyScoring = other.GetComponent<Scoring>();
+                        if (enemyScoring != null)
+                        {
+                            enemyScoring.GrantRewards();
+                        }
+                    }
+                }
                 if (_destroyItself) Destroy(gameObject);
             }
         }

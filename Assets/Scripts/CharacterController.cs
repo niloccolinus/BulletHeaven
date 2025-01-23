@@ -4,52 +4,53 @@ using UnityEngine.InputSystem;
 public class CharacterController : MonoBehaviour
 {
     [SerializeField] 
-    private float movementSpeed;
+    private float _movementSpeed;
     [SerializeField] 
-    private float boostSpeed;
+    private float _boostSpeed;
     [SerializeField] 
-    private InputActionReference moveActionReference;
+    private InputActionReference _moveActionReference;
     [SerializeField] 
-    private InputActionReference boostActionReference;
+    private InputActionReference _boostActionReference;
 
     private Animator animator;
+    private const string ANIMATOR_BOOL_IS_MOVING = "IsMoving";
 
     private void Start()
     {
         animator = GetComponent<Animator>();
 
-        moveActionReference.action.Enable();
-        boostActionReference.action.Enable();
+        _moveActionReference.action.Enable();
+        _boostActionReference.action.Enable();
     }
 
     private void Update()
     {
         float boost = 1;
 
-        // Vérifie si le boost est activé
-        if (boostActionReference.action.phase == InputActionPhase.Performed)
+        // check if boost is activated
+        if (_boostActionReference.action.phase == InputActionPhase.Performed)
         {
-            boost = boostSpeed;
+            boost = _boostSpeed;
         }
 
-        // Lecture des inputs de mouvement
-        Vector2 frameMovement = moveActionReference.action.ReadValue<Vector2>();
+        // read movement inputs
+        Vector2 frameMovement = _moveActionReference.action.ReadValue<Vector2>();
         Vector3 frameMovement3D = new Vector3(frameMovement.x, 0, frameMovement.y);
 
-        // Déplacement du personnage
-        Vector3 newPos = transform.position + frameMovement3D * movementSpeed * boost * Time.deltaTime;
+        // character movement
+        Vector3 newPos = transform.position + frameMovement3D * _movementSpeed * boost * Time.deltaTime;
         transform.position = newPos;
 
-        // Calcul de la direction et rotation
-        if (frameMovement3D.sqrMagnitude > 0.01f) // Vérifie un mouvement significatif
+        // calculate direction and rotation
+        if (frameMovement3D.sqrMagnitude > 0.01f) // check for a significant movement
         {
             Quaternion targetRotation = Quaternion.LookRotation(frameMovement3D.normalized, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
 
-        // Gestion du booléen "IsMoving" dans l'Animator
-        bool isMoving = frameMovement3D.sqrMagnitude > 0.01f; // True si le personnage se déplace
-        animator.SetBool("IsMoving", isMoving);
+        // set is moving bool
+        bool isMoving = frameMovement3D.sqrMagnitude > 0.01f;
+        animator.SetBool(ANIMATOR_BOOL_IS_MOVING, isMoving);
     }
 
 

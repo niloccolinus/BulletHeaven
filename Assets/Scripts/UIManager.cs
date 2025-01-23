@@ -1,43 +1,65 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    // static instance
     public static UIManager Instance { get; private set; }
 
     [SerializeField]
     private GameObject _gameOverPanel;
-    [Header("Game UI")]
     [SerializeField]
-    private GameObject _xpSlider;
+    private Image _xpSlider;
     [SerializeField]
-    private GameObject _healthSlider;
+    private Image _healthSlider;
     [SerializeField]
     private TextMeshProUGUI _score;
 
     private void Awake()
     {
-        // make sure there is only one instance of UIManager
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject); // destroy this instance if another one exists
+            Destroy(gameObject);
             return;
         }
 
         Instance = this;
-
-        // make this object persistent between scenes
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        // subscribe to GameManager events
+        GameManager.Instance.OnScoreChanged += UpdateScore;
+        GameManager.Instance.OnHealthChanged += UpdateHealth;
+        GameManager.Instance.OnXPChanged += UpdateXP;
+    }
+
+    private void OnDestroy()
+    {
+        // unsubscribe from GameManager events
+        GameManager.Instance.OnScoreChanged -= UpdateScore;
+        GameManager.Instance.OnHealthChanged -= UpdateHealth;
+        GameManager.Instance.OnXPChanged -= UpdateXP;
+    }
+
+    private void UpdateScore(int score)
+    {
+        _score.text = score + " pts";
+    }
+
+    private void UpdateHealth(float health)
+    {
+        _healthSlider.fillAmount = health / 100f; // fill between 0 & 1
+    }
+
+    private void UpdateXP(float xp)
+    {
+        _xpSlider.fillAmount = xp / 100f;
+    }
 
     public void ShowGameOver()
     {
         _gameOverPanel.SetActive(true);
     }
-
-
 }
