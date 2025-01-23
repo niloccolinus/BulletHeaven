@@ -1479,8 +1479,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e26a8ada2e97344e9f899cb802ffecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  satelliteCount: 3
-  satellitePrefab: {fileID: 8118963732262246295, guid: 5a267822f4bdd3345a43681f6d08cafb, type: 3}
-  satellitesParent: {fileID: 0}
-  maxSatellites: 10
-  orbitRadius: 2
+  _satelliteCount: 3
+  _satellitePrefab: {fileID: 8118963732262246295, guid: 5a267822f4bdd3345a43681f6d08cafb, type: 3}
+  _satellitesParent: {fileID: 0}
+  _maxSatellites: 10
+  _orbitRadius: 2

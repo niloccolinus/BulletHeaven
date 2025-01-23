@@ -2,13 +2,26 @@ using UnityEngine;
 
 public class SatelliteManager : MonoBehaviour
 {
-    public int satelliteCount = 3;
-    [SerializeField] private GameObject satellitePrefab;
-    [SerializeField] private Transform satellitesParent;
-    [SerializeField][Range(0, 10)] private int maxSatellites = 10;
-    [SerializeField][Range(0.2f, 10.0f)] private float orbitRadius = 2.0f; // Plage définie directement avec [Range]
+    [SerializeField]
+    private int _satelliteCount = 3;
+    public int SatelliteCount 
+    {
+        get => _satelliteCount; 
+        private set => _satelliteCount = Mathf.Clamp(value, 0, _maxSatellites);
+    }
 
-    private GameObject[] satellites;
+    [SerializeField] 
+    private GameObject _satellitePrefab;
+    [SerializeField] 
+    private Transform _satellitesParent;
+    [SerializeField]
+    [Range(0, 10)] 
+    private int _maxSatellites = 10;
+    [SerializeField]
+    [Range(0.2f, 10.0f)] 
+    private float _orbitRadius = 2.0f;
+
+    private GameObject[] _satellites;
 
     private void Start()
     {
@@ -19,7 +32,7 @@ public class SatelliteManager : MonoBehaviour
     private void OnValidate()
     {
         // Clamp le nombre de satellites pour rester dans les limites autorisées
-        satelliteCount = Mathf.Clamp(satelliteCount, 0, maxSatellites);
+        _satelliteCount = Mathf.Clamp(_satelliteCount, 0, _maxSatellites);
 
         // Vérifie si l'application est en mode lecture pour éviter les erreurs
         if (Application.isPlaying)
@@ -31,9 +44,9 @@ public class SatelliteManager : MonoBehaviour
     public void UpdateSatellites()
     {
         // Détruire les anciens satellites s'ils existent
-        if (satellites != null)
+        if (_satellites != null)
         {
-            foreach (var satellite in satellites)
+            foreach (var satellite in _satellites)
             {
                 if (satellite != null)
                 {
@@ -43,21 +56,21 @@ public class SatelliteManager : MonoBehaviour
         }
 
         // Initialiser un nouveau tableau pour les satellites
-        satellites = new GameObject[satelliteCount];
+        _satellites = new GameObject[_satelliteCount];
 
         // Placer les satellites de manière régulière autour du robot
-        for (int i = 0; i < satelliteCount; i++)
+        for (int i = 0; i < _satelliteCount; i++)
         {
             // Calcul de l'angle pour chaque satellite
-            float angle = i * 360f / satelliteCount;
+            float angle = i * 360f / _satelliteCount;
             Vector3 position = new Vector3(
-                Mathf.Cos(angle * Mathf.Deg2Rad) * orbitRadius,
+                Mathf.Cos(angle * Mathf.Deg2Rad) * _orbitRadius,
                 0,
-                Mathf.Sin(angle * Mathf.Deg2Rad) * orbitRadius
+                Mathf.Sin(angle * Mathf.Deg2Rad) * _orbitRadius
             );
 
             // Instancier le satellite et le positionner
-            GameObject newSatellite = Instantiate(satellitePrefab, satellitesParent);
+            GameObject newSatellite = Instantiate(_satellitePrefab, _satellitesParent);
             newSatellite.transform.localPosition = position;
 
             // Ajouter la rotation manuelle en X et en Y
@@ -66,7 +79,7 @@ public class SatelliteManager : MonoBehaviour
             newSatellite.transform.localRotation = angleRotation * baseRotation; // Combinaison des deux rotations
 
             // Ajouter au tableau des satellites
-            satellites[i] = newSatellite;
+            _satellites[i] = newSatellite;
         }
     }
 }
