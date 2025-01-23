@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7943527637158874252}
   - component: {fileID: 1004489579988314230}
   - component: {fileID: -1162663423443756621}
-  - component: {fileID: 2377150004207327665}
+  - component: {fileID: 1377098961143314721}
   - component: {fileID: 2246863193221405503}
   - component: {fileID: 2388212917281070788}
   m_Layer: 0
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 1804819749478612832, guid: 4b30a2ed55f78df40948ac4b08c70bb2, type: 3}
   projectileSpeed: 3
---- !u!114 &2377150004207327665
+--- !u!114 &1377098961143314721
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,9 +116,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8118963732262246295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f419afeee00319b40be530db9076d596, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e33ce44a400a984eb0452aa2c5a4832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 2
+  _destroyItself: 0
+  _isEnemy: 0
 --- !u!54 &2246863193221405503
 Rigidbody:
   m_ObjectHideFlags: 0

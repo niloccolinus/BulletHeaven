@@ -27,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
 
         Vector3 randomPosition = new Vector3(randomPosX, _height, randomPosZ);
 
-        Instantiate(_enemyPrefab, randomPosition, Quaternion.identity);
+        Instantiate(_enemyPrefab, randomPosition, Quaternion.identity, transform);
     }
 
 

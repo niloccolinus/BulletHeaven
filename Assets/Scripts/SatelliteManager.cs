@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class SatelliteManager : MonoBehaviour
 {
@@ -28,13 +30,14 @@ public class SatelliteManager : MonoBehaviour
         UpdateSatellites();
     }
 
-    // Cette méthode est appelée lorsque des valeurs changent dans l'inspecteur
+
+    // method called when values are changed in the inspector
     private void OnValidate()
     {
-        // Clamp le nombre de satellites pour rester dans les limites autorisées
+        // clamp satellites number to stay in limits
         _satelliteCount = Mathf.Clamp(_satelliteCount, 0, _maxSatellites);
 
-        // Vérifie si l'application est en mode lecture pour éviter les erreurs
+        // check if app is playing to avoid errors
         if (Application.isPlaying)
         {
             UpdateSatellites();
@@ -43,7 +46,7 @@ public class SatelliteManager : MonoBehaviour
 
     public void UpdateSatellites()
     {
-        // Détruire les anciens satellites s'ils existent
+        // destroy old satellites if they exist
         if (_satellites != null)
         {
             foreach (var satellite in _satellites)
@@ -55,13 +58,12 @@ public class SatelliteManager : MonoBehaviour
             }
         }
 
-        // Initialiser un nouveau tableau pour les satellites
         _satellites = new GameObject[_satelliteCount];
 
-        // Placer les satellites de manière régulière autour du robot
+        // place satellites regularly around robot
         for (int i = 0; i < _satelliteCount; i++)
         {
-            // Calcul de l'angle pour chaque satellite
+            // angle for each satellite
             float angle = i * 360f / _satelliteCount;
             Vector3 position = new Vector3(
                 Mathf.Cos(angle * Mathf.Deg2Rad) * _orbitRadius,
@@ -69,16 +71,15 @@ public class SatelliteManager : MonoBehaviour
                 Mathf.Sin(angle * Mathf.Deg2Rad) * _orbitRadius
             );
 
-            // Instancier le satellite et le positionner
+            if (_satellitesParent == null) return;
             GameObject newSatellite = Instantiate(_satellitePrefab, _satellitesParent);
             newSatellite.transform.localPosition = position;
 
-            // Ajouter la rotation manuelle en X et en Y
-            Quaternion baseRotation = Quaternion.Euler(90, 90, 0); // Rotation fixe pour aligner correctement
-            Quaternion angleRotation = Quaternion.Euler(0, -angle, 0); // Rotation autour du cercle
-            newSatellite.transform.localRotation = angleRotation * baseRotation; // Combinaison des deux rotations
+            // adjust X & Y rotation
+            Quaternion baseRotation = Quaternion.Euler(90, 90, 0);
+            Quaternion angleRotation = Quaternion.Euler(0, -angle, 0);
+            newSatellite.transform.localRotation = angleRotation * baseRotation;
 
-            // Ajouter au tableau des satellites
             _satellites[i] = newSatellite;
         }
     }

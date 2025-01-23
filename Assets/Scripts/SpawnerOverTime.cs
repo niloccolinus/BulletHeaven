@@ -10,6 +10,8 @@ public class SpawnerOverTime : MonoBehaviour
     [SerializeField]
     private GameObject _spawner;
     [SerializeField]
+    private float _startSpawningDelay = 2f;
+    [SerializeField]
     private float _spawnFrequency = 10f;
     [SerializeField]
     private float _spawnRadius = 10f;
@@ -50,6 +52,7 @@ public class SpawnerOverTime : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitForSeconds(_startSpawningDelay);
             CreateSpawner();
             yield return new WaitForSeconds(_spawnFrequency);
         }
