@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -65,7 +66,26 @@ public class Health : MonoBehaviour
         else
         {
             IsDead = true;
-            //Destroy(gameObject); // destroy enemy
+            StartCoroutine(DeathSequence());
         }
+    }
+
+    private IEnumerator DeathSequence()
+    {
+        // play vfx or animation
+
+
+        // disable meshes & collider
+        var collider = GetComponent<Collider>();
+        var meshes = GetComponentsInChildren<MeshRenderer>();
+        
+        collider.enabled = false;
+        foreach (var mesh in meshes)
+        {
+            mesh.enabled = false;
+        }
+
+        yield return new WaitForSeconds(1f);
+        Destroy(gameObject); // destroy enemy
     }
 }

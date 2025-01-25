@@ -23,7 +23,6 @@ public class HitOtherOnCollision : MonoBehaviour
                 if (enemyHealth != null)
                 {
                     enemyHealth.LoseHealth(_damage);
-
                     // grant rewards if enemy is dead
                     if (enemyHealth.IsDead)
                     {
