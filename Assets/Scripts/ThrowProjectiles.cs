@@ -7,6 +7,8 @@ public class ThrowProjectiles : MonoBehaviour
     private GameObject projectilePrefab;
     [SerializeField]
     private float projectileSpeed = 10f;
+    [SerializeField]
+    private float xpCost = 10f;
 
     private Vector3 spawnPos;
 
@@ -16,10 +18,18 @@ public class ThrowProjectiles : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameObject instantiatedProjectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
-            instantiatedProjectile.transform.parent = gameObject.transform;
+            // check if player has enough xp
+            if (GameManager.Instance.PlayerXP >= xpCost)
+            {
+                // reduce xp
+                GameManager.Instance.PlayerXP -= xpCost;
 
-            StartCoroutine(MoveProjectile(instantiatedProjectile));
+                // shoot projectile
+                GameObject instantiatedProjectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
+                instantiatedProjectile.transform.parent = gameObject.transform;
+
+                StartCoroutine(MoveProjectile(instantiatedProjectile));
+            }
         }
 
     }

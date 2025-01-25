@@ -107,6 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 1804819749478612832, guid: 4b30a2ed55f78df40948ac4b08c70bb2, type: 3}
   projectileSpeed: 3
+  xpCost: 5
 --- !u!114 &1377098961143314721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,6 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 10
   _pushForce: 5
+  _pushDuration: 0.2
   _destroyItself: 0
   _isEnemy: 0
 --- !u!54 &2246863193221405503
