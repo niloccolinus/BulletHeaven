@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 10
+  _pushForce: 5
   _destroyItself: 0
   _isEnemy: 0
 --- !u!54 &2246863193221405503

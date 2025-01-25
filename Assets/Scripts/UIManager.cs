@@ -29,6 +29,8 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        InitializeUI();
+
         // subscribe to GameManager events
         GameManager.Instance.OnScoreChanged += UpdateScore;
         GameManager.Instance.OnHealthChanged += UpdateHealth;
@@ -41,6 +43,13 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnScoreChanged -= UpdateScore;
         GameManager.Instance.OnHealthChanged -= UpdateHealth;
         GameManager.Instance.OnXPChanged -= UpdateXP;
+    }
+
+    private void InitializeUI()
+    {
+        UpdateScore(GameManager.Instance.TotalScore);
+        UpdateHealth(GameManager.Instance.PlayerHealth);
+        UpdateXP(GameManager.Instance.PlayerXP);
     }
 
     private void UpdateScore(int score)

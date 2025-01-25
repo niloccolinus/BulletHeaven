@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class HitOtherOnCollision : MonoBehaviour
@@ -5,7 +6,9 @@ public class HitOtherOnCollision : MonoBehaviour
     [SerializeField]
     private int _damage;
     [SerializeField]
-    private float _pushForce;
+    private float _pushForce = 5f;
+    [SerializeField]
+    private float _pushDuration = 0.2f;
     [SerializeField]
     private bool _destroyItself = false;
     [SerializeField]
@@ -18,21 +21,23 @@ public class HitOtherOnCollision : MonoBehaviour
             // if projectile or weapon
             if (other.CompareTag("Enemy"))
             {
-                // TODO : apply push force
+                // push enemy
+                Rigidbody enemyRigidbody = other.GetComponent<Rigidbody>();
+                // pushDirection calculated by substracting projectile position by enemy position
+                Vector3 pushDirection = (other.transform.position - transform.position).normalized;
+                StartCoroutine(ApplyPushForce(enemyRigidbody, pushDirection));
+
+                // hurt enemy
                 Health enemyHealth = other.GetComponent<Health>();
-                if (enemyHealth != null)
+                enemyHealth.LoseHealth(_damage);
+
+                // grant rewards if enemy is dead
+                if (enemyHealth.IsDead)
                 {
-                    enemyHealth.LoseHealth(_damage);
-                    // grant rewards if enemy is dead
-                    if (enemyHealth.IsDead)
-                    {
-                        Scoring enemyScoring = other.GetComponent<Scoring>();
-                        if (enemyScoring != null)
-                        {
-                            enemyScoring.GrantRewards();
-                        }
-                    }
+                    Scoring enemyScoring = other.GetComponent<Scoring>();
+                    enemyScoring.GrantRewards();
                 }
+
                 if (_destroyItself) Destroy(gameObject);
             }
         }
@@ -44,5 +49,22 @@ public class HitOtherOnCollision : MonoBehaviour
             }
         }
 
+    }
+    private IEnumerator ApplyPushForce(Rigidbody enemyRigidbody, Vector3 pushDirection)
+    {
+        // disable enemy controller
+        EnemyController enemyController = enemyRigidbody.GetComponent<EnemyController>();
+        enemyController.enabled = false;
+
+        // apply force
+        enemyRigidbody.AddForce(pushDirection * _pushForce, ForceMode.Impulse);
+
+        yield return new WaitForSeconds(_pushDuration);
+
+        // reduce rigidbody speed to stop the movement
+        enemyRigidbody.linearVelocity = Vector3.zero;
+
+        // re-enable enemy controller
+        enemyController.enabled = true;
     }
 }
