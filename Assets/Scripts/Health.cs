@@ -57,28 +57,44 @@ public class Health : MonoBehaviour
 
     private void Die()
     {
-        // if player is dead, show game over
         if (gameObject.CompareTag("Player"))
         {
-            UIManager.Instance.ShowGameOver();
-            Time.timeScale = 0; // stop game
+            // if player is dead
+            StartCoroutine(PlayerDeathSequence());
         }
         else
         {
-            IsDead = true;
-            StartCoroutine(DeathSequence());
+            // if ememy is dead,
+            StartCoroutine(EnemyDeathSequence());
         }
     }
 
-    private IEnumerator DeathSequence()
+    private IEnumerator PlayerDeathSequence()
     {
+        // make robot parts fall
+/*        Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
+        foreach (var rigidbody in rigidbodies)
+        {
+            rigidbody.isKinematic = false;
+        }*/
+        yield return new WaitForSeconds(1f);
+
+        // show game over
+        UIManager.Instance.ShowGameOver();
+        GameManager.Instance.TriggerGameOver();
+    }
+
+    private IEnumerator EnemyDeathSequence()
+    {
+        IsDead = true;
+
         // play vfx or animation
 
 
         // disable meshes & collider
         var collider = GetComponent<Collider>();
         var meshes = GetComponentsInChildren<MeshRenderer>();
-        
+
         collider.enabled = false;
         foreach (var mesh in meshes)
         {

@@ -437,6 +437,7 @@ MonoBehaviour:
   _xpSlider: {fileID: 796238127}
   _healthSlider: {fileID: 338077279}
   _score: {fileID: 751071555}
+  _sceneLoader: {fileID: 0}
 --- !u!114 &561052786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -958,7 +959,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 561052786}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: StartGame
+        m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1495,10 +1496,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8425662775498329419, guid: d63d776a320e53a43a615f58fd591d96, type: 3}
-      propertyPath: _gameOverPanel
-      value: 
-      objectReference: {fileID: 827608259}
     - target: {fileID: 9139489664419784910, guid: d63d776a320e53a43a615f58fd591d96, type: 3}
       propertyPath: m_Name
       value: Robot

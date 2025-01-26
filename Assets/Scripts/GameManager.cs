@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -60,4 +61,22 @@ public class GameManager : MonoBehaviour
             OnXPChanged?.Invoke(_playerXP); 
         }
     }
+
+    public void TriggerGameOver()
+    {
+        Time.timeScale = 0; // stop game time
+        UIManager.Instance.ShowGameOver();
+    }
+
+    public void ResetGame()
+    {
+        // reset game data
+        TotalScore = 0;
+        PlayerHealth = 100f;
+        PlayerXP = 0f;
+
+        // update the UI
+        UIManager.Instance.ResetUI();
+    }
+
 }

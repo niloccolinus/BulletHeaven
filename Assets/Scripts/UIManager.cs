@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
     private Image _healthSlider;
     [SerializeField]
     private TextMeshProUGUI _score;
+    [SerializeField]
+    private SceneLoader _sceneLoader;
 
     private void Awake()
     {
@@ -70,5 +72,13 @@ public class UIManager : MonoBehaviour
     public void ShowGameOver()
     {
         _gameOverPanel.SetActive(true);
+    }
+
+    public void ResetUI()
+    {
+        UpdateScore(0);
+        UpdateHealth(100f);
+        UpdateXP(0f);
+        _gameOverPanel.SetActive(false);
     }
 }
