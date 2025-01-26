@@ -79,4 +79,9 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.ResetUI();
     }
 
+    public void ConsumeXP(float xpToConsume)
+    {
+        // reduce XP based on the consumption rate & ensure XP does not drop below zero
+        GameManager.Instance.PlayerXP = Mathf.Max(0, GameManager.Instance.PlayerXP - xpToConsume * Time.deltaTime);
+    }
 }

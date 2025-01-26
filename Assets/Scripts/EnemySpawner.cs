@@ -5,6 +5,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     private GameObject _enemyPrefab;
     [SerializeField]
+    private GameObject _enemyParent;
+    [SerializeField]
     private BoxCollider _spawnArea;
     [SerializeField]
     private float _height = 1f;
@@ -14,6 +16,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
+        _enemyParent = FindFirstObjectByType<SpawnerOverTime>().gameObject; // enemies will be instantiated in SpawnManager
         InvokeRepeating(nameof(InstantiateEnemy), 2.0f, _spawnDelay);
     }
 
@@ -27,7 +30,7 @@ public class EnemySpawner : MonoBehaviour
 
         Vector3 randomPosition = new Vector3(randomPosX, _height, randomPosZ);
 
-        Instantiate(_enemyPrefab, randomPosition, Quaternion.identity, transform);
+        Instantiate(_enemyPrefab, randomPosition, Quaternion.identity, _enemyParent.transform);
     }
 
 

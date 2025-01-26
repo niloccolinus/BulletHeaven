@@ -3,12 +3,17 @@ using UnityEngine.InputSystem;
 
 public class CharacterController : MonoBehaviour
 {
+    [Header("Movement Settings")]
     [SerializeField] 
     private float _movementSpeed;
     [SerializeField] 
-    private float _boostSpeed;
-    [SerializeField] 
     private InputActionReference _moveActionReference;
+
+    [Header("Boost Settings")]
+    [SerializeField] 
+    private float _boostSpeed;
+    [SerializeField]
+    private float _xpConsumptionRate = 10f;
     [SerializeField] 
     private InputActionReference _boostActionReference;
 
@@ -27,10 +32,11 @@ public class CharacterController : MonoBehaviour
     {
         float boost = 1;
 
-        // check if boost is activated
-        if (_boostActionReference.action.phase == InputActionPhase.Performed)
+        // check if boost is activated and player has enough XP
+        if (_boostActionReference.action.phase == InputActionPhase.Performed && GameManager.Instance.PlayerXP > 0)
         {
             boost = _boostSpeed;
+            GameManager.Instance.ConsumeXP(_xpConsumptionRate); // reduce XP while boosting
         }
 
         // read movement inputs
@@ -52,6 +58,5 @@ public class CharacterController : MonoBehaviour
         bool isMoving = frameMovement3D.sqrMagnitude > 0.01f;
         animator.SetBool(ANIMATOR_BOOL_IS_MOVING, isMoving);
     }
-
 
 }

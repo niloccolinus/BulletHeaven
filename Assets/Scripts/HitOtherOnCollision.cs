@@ -1,55 +1,80 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class HitOtherOnCollision : MonoBehaviour
 {
+    [Header("Damage and Push Settings")]
     [SerializeField]
     private int _damage;
     [SerializeField]
     private float _pushForce = 5f;
     [SerializeField]
     private float _pushDuration = 0.2f;
+
+    [Header("Behavior Settings")]
     [SerializeField]
     private bool _destroyItself = false;
     [SerializeField]
     private bool _isEnemy = true;
 
-    private void OnTriggerEnter(Collider other)
+    [Header("Visual Effects")]
+    [SerializeField]
+    private VisualEffect _impactEffect;
+
+    private void OnCollisionEnter(Collision collision)
     {
-        if (!_isEnemy)
+
+        if (!_isEnemy && collision.collider.CompareTag("Enemy"))
         {
-            // if projectile or weapon
-            if (other.CompareTag("Enemy"))
-            {
-                // push enemy
-                Rigidbody enemyRigidbody = other.GetComponent<Rigidbody>();
-                // pushDirection calculated by substracting projectile position by enemy position
-                Vector3 pushDirection = (other.transform.position - transform.position).normalized;
-                StartCoroutine(ApplyPushForce(enemyRigidbody, pushDirection));
-
-                // hurt enemy
-                Health enemyHealth = other.GetComponent<Health>();
-                enemyHealth.LoseHealth(_damage);
-
-                // grant rewards if enemy is dead
-                if (enemyHealth.IsDead)
-                {
-                    Scoring enemyScoring = other.GetComponent<Scoring>();
-                    enemyScoring.GrantRewards();
-                }
-
-                if (_destroyItself) Destroy(gameObject);
-            }
+            HandleEnemyCollision(collision);
         }
-        else
+        else if (_isEnemy && collision.collider.CompareTag("Player"))
         {
-            if (other.CompareTag("Player"))
-            {
-                other.GetComponent<Health>().LoseHealth(_damage);
-            }
+            HandlePlayerCollision(collision);
         }
-
     }
+
+    private void HandleEnemyCollision(Collision collision)
+    {
+        // get impact position
+        ContactPoint contact = collision.GetContact(0);
+        Vector3 impactPosition = contact.point;
+
+        // play VFX at the impact position
+        StartCoroutine(PlayImpactEffect(impactPosition));
+
+        // apply push to the enemy
+        Rigidbody enemyRigidbody = collision.collider.GetComponent<Rigidbody>();
+        Vector3 pushDirection = (collision.transform.position - transform.position).normalized;
+        StartCoroutine(ApplyPushForce(enemyRigidbody, pushDirection));
+
+
+        // deal damage to the enemy
+        Health enemyHealth = collision.collider.GetComponent<Health>();
+        enemyHealth.LoseHealth(_damage);
+
+        // grant rewards if the enemy dies
+        if (enemyHealth.IsDead)
+        {
+            Scoring enemyScoring = collision.collider.GetComponent<Scoring>();
+            enemyScoring?.GrantRewards();
+        }
+
+        // destroy the projectile if required
+        if (_destroyItself)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void HandlePlayerCollision(Collision collision)
+    {
+        // deal damage to the player
+        Health playerHealth = collision.collider.GetComponent<Health>();
+        playerHealth?.LoseHealth(_damage);
+    }
+
     private IEnumerator ApplyPushForce(Rigidbody enemyRigidbody, Vector3 pushDirection)
     {
         // disable enemy controller
@@ -66,5 +91,16 @@ public class HitOtherOnCollision : MonoBehaviour
 
         // re-enable enemy controller
         enemyController.enabled = true;
+    }
+
+    private IEnumerator PlayImpactEffect(Vector3 position)
+    {
+        // instantiate the VFX prefab
+        VisualEffect impactEffect = Instantiate(_impactEffect, position, Quaternion.identity);
+
+        yield return new WaitForSeconds(1f);
+
+        // destroy the VFX object
+        Destroy(impactEffect);
     }
 }
