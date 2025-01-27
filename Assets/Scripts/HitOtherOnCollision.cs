@@ -17,21 +17,39 @@ public class HitOtherOnCollision : MonoBehaviour
     private bool _destroyItself = false;
     [SerializeField]
     private bool _isEnemy = true;
+    [SerializeField]
+    private float _damageInterval = 1f;
 
     [Header("Visual Effects")]
     [SerializeField]
     private VisualEffect _impactEffect;
 
+    private float _timeSinceLastDamage = 0f;
+
     private void OnCollisionEnter(Collision collision)
     {
-
         if (!_isEnemy && collision.collider.CompareTag("Enemy"))
         {
             HandleEnemyCollision(collision);
         }
         else if (_isEnemy && collision.collider.CompareTag("Player"))
         {
-            HandlePlayerCollision(collision);
+            ApplyDamageToPlayer(collision);
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (_isEnemy && collision.collider.CompareTag("Player"))
+        {
+            _timeSinceLastDamage += Time.deltaTime;
+
+            // apply damage if enough time has passed
+            if (_timeSinceLastDamage >= _damageInterval)
+            {
+                ApplyDamageToPlayer(collision);
+                _timeSinceLastDamage = 0f; // reset timer
+            }
         }
     }
 
@@ -68,7 +86,7 @@ public class HitOtherOnCollision : MonoBehaviour
         }
     }
 
-    private void HandlePlayerCollision(Collision collision)
+    private void ApplyDamageToPlayer(Collision collision)
     {
         // deal damage to the player
         Health playerHealth = collision.collider.GetComponent<Health>();
