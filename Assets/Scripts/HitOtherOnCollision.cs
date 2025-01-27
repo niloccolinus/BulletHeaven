@@ -60,7 +60,7 @@ public class HitOtherOnCollision : MonoBehaviour
         Vector3 impactPosition = contact.point;
 
         // play VFX at the impact position
-        StartCoroutine(PlayImpactEffect(impactPosition));
+        Instantiate(_impactEffect, impactPosition, Quaternion.identity);
 
         // apply push to the enemy
         Rigidbody enemyRigidbody = collision.collider.GetComponent<Rigidbody>();
@@ -111,14 +111,5 @@ public class HitOtherOnCollision : MonoBehaviour
         enemyController.enabled = true;
     }
 
-    private IEnumerator PlayImpactEffect(Vector3 position)
-    {
-        // instantiate the VFX prefab
-        VisualEffect impactEffect = Instantiate(_impactEffect, position, Quaternion.identity);
 
-        yield return new WaitForSeconds(1f);
-
-        // destroy the VFX object
-        Destroy(impactEffect);
-    }
 }
