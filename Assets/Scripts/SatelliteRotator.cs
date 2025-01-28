@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SatelliteRotator : MonoBehaviour
 {
-    [SerializeField] 
+    [SerializeField]
     private float _rotationSpeed = 100f;
     [SerializeField]
     private Transform _player;

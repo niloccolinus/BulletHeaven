@@ -782,6 +782,7 @@ MonoBehaviour:
   _totalScore: 0
   _playerHealth: 0
   _playerXP: 0
+  _maxEnemies: 20
 --- !u!1 &1709696583
 GameObject:
   m_ObjectHideFlags: 0
@@ -911,7 +912,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _maxEnemies: 20
 --- !u!1 &1788725909
 GameObject:
   m_ObjectHideFlags: 0

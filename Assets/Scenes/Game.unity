@@ -812,6 +812,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8949233181189002028, guid: 4f2416cf975c2c64baf1f4200c154daf, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 906812466}
     - target: {fileID: 3174512953542081813, guid: 4f2416cf975c2c64baf1f4200c154daf, type: 3}
       propertyPath: m_Name
       value: Satellites
