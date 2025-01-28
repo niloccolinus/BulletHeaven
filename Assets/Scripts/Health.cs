@@ -9,11 +9,14 @@ public class Health : MonoBehaviour
     private float _currentHealth;
 
     private Animator _animator;
+    private SatelliteManager _satelliteManager;
+
     public bool IsDead = false;
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
+        _satelliteManager = GetComponent<SatelliteManager>();
         _currentHealth = _maxHealth;
 
         // if game object is the player, synchronize health
@@ -81,8 +84,9 @@ public class Health : MonoBehaviour
 
         IsDead = true;
         _animator.SetBool("IsDying", IsDead);
+        _satelliteManager.StopSatellites(); // make satellite fall using gravity
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
 
         // show game over
         UIManager.Instance.ShowGameOver();

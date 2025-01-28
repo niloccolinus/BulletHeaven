@@ -83,4 +83,16 @@ public class SatelliteManager : MonoBehaviour
             _satellites[i] = newSatellite;
         }
     }
+
+    public void StopSatellites()
+    {
+        // stop rotation
+        _satellitesParent.gameObject.GetComponent<SatelliteRotator>().StopRotation();
+
+        foreach (var satellite in _satellites)
+        {
+            var rb = satellite.GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+        }
+    }
 }

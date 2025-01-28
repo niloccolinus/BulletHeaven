@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     private float _playerHealth;
     [SerializeField]
     private float _playerXP;
+    [SerializeField]
+    private int _maxEnemies;
+    public int MaxEnemies { get => _maxEnemies; }
 
     public event Action<int> OnScoreChanged;
     public event Action<float> OnHealthChanged;
@@ -58,7 +61,7 @@ public class GameManager : MonoBehaviour
         set
         {
             _playerXP = value;
-            OnXPChanged?.Invoke(_playerXP); 
+            OnXPChanged?.Invoke(_playerXP);
         }
     }
 
