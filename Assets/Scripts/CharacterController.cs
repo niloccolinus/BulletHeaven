@@ -8,8 +8,6 @@ public class CharacterController : MonoBehaviour
     private float _movementSpeed;
     [SerializeField]
     private InputActionReference _moveActionReference;
-    [SerializeField]
-    private Rigidbody _headRigidbody;
 
     [Header("Boost Settings")]
     [SerializeField]

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -1162663423443756621}
   - component: {fileID: 1377098961143314721}
   - component: {fileID: 2246863193221405503}
-  - component: {fileID: 2388212917281070788}
+  - component: {fileID: 8824808747327036358}
   m_Layer: 0
   m_Name: Satellite
   m_TagString: Untagged
@@ -125,6 +125,7 @@ MonoBehaviour:
   _pushDuration: 0.2
   _destroyItself: 0
   _isEnemy: 0
+  _damageInterval: 1
   _impactEffect: {fileID: 3078941683633007519, guid: ac2da8e70fa93be4c85a7b01c0e037a6, type: 3}
 --- !u!54 &2246863193221405503
 Rigidbody:
@@ -148,13 +149,13 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &2388212917281070788
-SphereCollider:
+--- !u!64 &8824808747327036358
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -171,6 +172,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.0035233367
-  m_Center: {x: -0.000019499566, y: 0.011, z: 5.8207675e-11}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2415135635693640379, guid: 6f098c7e155f94347bc4a6794de4c846, type: 3}
