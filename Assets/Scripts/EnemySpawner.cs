@@ -13,9 +13,12 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     [Range(0.1f, 2.0f)]
     private float _spawnDelay = 2.0f;
+    [SerializeField]
+    private int _maxEnemies;
 
     void Start()
     {
+        _maxEnemies = GameManager.Instance.MaxEnemies;
         _enemyParent = FindFirstObjectByType<SpawnerOverTime>().gameObject; // enemies will be instantiated in SpawnManager
         InvokeRepeating(nameof(InstantiateEnemy), 2.0f, _spawnDelay);
     }
@@ -30,7 +33,12 @@ public class EnemySpawner : MonoBehaviour
 
         Vector3 randomPosition = new Vector3(randomPosX, _height, randomPosZ);
 
-        Instantiate(_enemyPrefab, randomPosition, Quaternion.identity, _enemyParent.transform);
+        // check max number of enemies
+        EnemyController[] enemies = _enemyParent.GetComponentsInChildren<EnemyController>();
+        if (enemies.Length < _maxEnemies)
+        {
+            Instantiate(_enemyPrefab, randomPosition, Quaternion.identity, _enemyParent.transform);
+        }
     }
 
 

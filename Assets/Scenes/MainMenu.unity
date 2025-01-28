@@ -782,6 +782,7 @@ MonoBehaviour:
   _totalScore: 0
   _playerHealth: 0
   _playerXP: 0
+  _maxEnemies: 20
 --- !u!1 &1788725909
 GameObject:
   m_ObjectHideFlags: 0
