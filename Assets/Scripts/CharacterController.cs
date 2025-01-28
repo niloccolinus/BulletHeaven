@@ -4,21 +4,22 @@ using UnityEngine.InputSystem;
 public class CharacterController : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] 
+    [SerializeField]
     private float _movementSpeed;
-    [SerializeField] 
+    [SerializeField]
     private InputActionReference _moveActionReference;
 
     [Header("Boost Settings")]
-    [SerializeField] 
+    [SerializeField]
     private float _boostSpeed;
     [SerializeField]
     private float _xpConsumptionRate = 10f;
-    [SerializeField] 
+    [SerializeField]
     private InputActionReference _boostActionReference;
 
     private Animator animator;
     private const string ANIMATOR_BOOL_IS_MOVING = "IsMoving";
+    private const string ANIMATOR_BOOL_IS_RUNNING = "IsRunning";
 
     private void Start()
     {
@@ -47,16 +48,22 @@ public class CharacterController : MonoBehaviour
         Vector3 newPos = transform.position + frameMovement3D * _movementSpeed * boost * Time.deltaTime;
         transform.position = newPos;
 
+        // set is moving bool
+        bool isMoving = frameMovement3D.sqrMagnitude > 0.01f;
+        animator.SetBool(ANIMATOR_BOOL_IS_MOVING, isMoving);
+
+        Debug.Log(frameMovement3D.sqrMagnitude);
+
+        // set is running bool
+        bool isRunning = boost > 1;
+        animator.SetBool(ANIMATOR_BOOL_IS_RUNNING, isRunning);
+
         // calculate direction and rotation
-        if (frameMovement3D.sqrMagnitude > 0.01f) // check for a significant movement
+        if (isMoving) // check for a significant movement
         {
             Quaternion targetRotation = Quaternion.LookRotation(frameMovement3D.normalized, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
-
-        // set is moving bool
-        bool isMoving = frameMovement3D.sqrMagnitude > 0.01f;
-        animator.SetBool(ANIMATOR_BOOL_IS_MOVING, isMoving);
     }
 
 }
