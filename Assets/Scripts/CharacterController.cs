@@ -8,6 +8,8 @@ public class CharacterController : MonoBehaviour
     private float _movementSpeed;
     [SerializeField]
     private InputActionReference _moveActionReference;
+    [SerializeField]
+    private Rigidbody _headRigidbody;
 
     [Header("Boost Settings")]
     [SerializeField]
@@ -52,8 +54,6 @@ public class CharacterController : MonoBehaviour
         bool isMoving = frameMovement3D.sqrMagnitude > 0.01f;
         animator.SetBool(ANIMATOR_BOOL_IS_MOVING, isMoving);
 
-        Debug.Log(frameMovement3D.sqrMagnitude);
-
         // set is running bool
         bool isRunning = boost > 1;
         animator.SetBool(ANIMATOR_BOOL_IS_RUNNING, isRunning);
@@ -65,5 +65,4 @@ public class CharacterController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
     }
-
 }

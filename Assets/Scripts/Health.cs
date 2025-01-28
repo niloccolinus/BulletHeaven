@@ -8,11 +8,12 @@ public class Health : MonoBehaviour
     [SerializeField]
     private float _currentHealth;
 
-
+    private Animator _animator;
     public bool IsDead = false;
 
     private void Start()
     {
+        _animator = GetComponent<Animator>();
         _currentHealth = _maxHealth;
 
         // if game object is the player, synchronize health
@@ -71,13 +72,17 @@ public class Health : MonoBehaviour
 
     private IEnumerator PlayerDeathSequence()
     {
-        // make robot parts fall
-/*        Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
-        foreach (var rigidbody in rigidbodies)
-        {
-            rigidbody.isKinematic = false;
-        }*/
-        yield return new WaitForSeconds(1f);
+        // make robot parts fall (bad performances / requires mesh collider on every part)
+        // Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
+        // foreach (var rigidbody in rigidbodies)
+        // {
+        //    rigidbody.isKinematic = false;
+        // }
+
+        IsDead = true;
+        _animator.SetBool("IsDying", IsDead);
+
+        yield return new WaitForSeconds(2f);
 
         // show game over
         UIManager.Instance.ShowGameOver();

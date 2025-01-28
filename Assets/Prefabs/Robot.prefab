@@ -1466,7 +1466,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementSpeed: 5
   _moveActionReference: {fileID: 6800092525090821347, guid: b60ed40318ad0bb41b96b9609ca0ed14, type: 3}
-  _boostSpeed: 7
+  _headRigidbody: {fileID: 0}
+  _boostSpeed: 6
   _xpConsumptionRate: 10
   _boostActionReference: {fileID: -6117572893210435004, guid: b60ed40318ad0bb41b96b9609ca0ed14, type: 3}
 --- !u!114 &1613378965928439190
