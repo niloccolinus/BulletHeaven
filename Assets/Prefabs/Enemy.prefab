@@ -657,6 +657,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _objectScoring: 100
   _xpCollectablePrefab: {fileID: 4510951735512833629, guid: 1aa73eb4b0616914d9a2f1d5d0063e13, type: 3}
+  _healthCollectablePrefab: {fileID: 4510951735512833629, guid: 56fb1a41d3f9a5640b6069dd4f021940, type: 3}
+  _healthDropChance: 30
 --- !u!135 &2997721834552420144
 SphereCollider:
   m_ObjectHideFlags: 0

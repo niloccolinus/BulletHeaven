@@ -6,11 +6,23 @@ public class Scoring : MonoBehaviour
     private int _objectScoring;
     [SerializeField]
     private GameObject _xpCollectablePrefab;
+    [SerializeField]
+    private GameObject _healthCollectablePrefab;
+    [SerializeField]
+    [Range(0f, 100f)]
+    private float _healthDropChance = 20f; 
 
     public void GrantRewards()
     {
         GameManager.Instance.TotalScore += _objectScoring;
-        Instantiate(_xpCollectablePrefab, transform.position, Quaternion.identity);
+
+        if (Random.value * 100f <= _healthDropChance)
+        {
+            Instantiate(_healthCollectablePrefab, transform.position, Quaternion.identity);
+        }
+        else 
+        {
+            Instantiate(_xpCollectablePrefab, transform.position, Quaternion.identity);
+        }
     }
 }
-

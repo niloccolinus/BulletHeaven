@@ -353,6 +353,7 @@ MonoBehaviour:
   _laserExpandSpeed: 0.5
   _laserDuration: 10
   _laserInterval: 10
+  _autoFireActive: 0
 --- !u!114 &1377098961143314721
 MonoBehaviour:
   m_ObjectHideFlags: 0

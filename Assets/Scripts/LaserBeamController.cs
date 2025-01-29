@@ -19,6 +19,7 @@ public class LaserBeamController : MonoBehaviour
 
     private Coroutine _laserCoroutine;
     private bool _laserUnlocked = false;
+    [SerializeField] 
     private bool _autoFireActive = true;
 
 
@@ -37,10 +38,10 @@ public class LaserBeamController : MonoBehaviour
 
     private void Update()
     {
-        if (!_autoFireActive && _laserUnlocked) // allows to fire laser with spacebar
+        if (!_autoFireActive) // allows to fire laser with spacebar
         {
-            // start laser if player presses space && laser is unlocked
-            if (Input.GetKeyDown(KeyCode.Space) && _laserUnlocked)
+            // start laser if player presses space
+            if (Input.GetKeyDown(KeyCode.Space) )
             {
                 StartLaser();
             }
