@@ -67,7 +67,6 @@ public class HitOtherOnCollision : MonoBehaviour
         Vector3 pushDirection = (collision.transform.position - transform.position).normalized;
         StartCoroutine(ApplyPushForce(enemyRigidbody, pushDirection));
 
-
         // deal damage to the enemy
         Health enemyHealth = collision.collider.GetComponent<Health>();
         enemyHealth.LoseHealth(_damage);

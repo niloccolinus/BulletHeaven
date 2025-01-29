@@ -4,17 +4,17 @@ using UnityEngine;
 public class LaserBeamController : MonoBehaviour
 {
     [Header("Laser Settings")]
-    [SerializeField] 
+    [SerializeField]
     private LineRenderer _laserLine;
-    [SerializeField] 
+    [SerializeField]
     private BoxCollider _laserCollider;
-    [SerializeField] 
+    [SerializeField]
     private float _laserMaxLength = 5f;
     [SerializeField]
     private float _laserExpandSpeed = 5f;
-    [SerializeField] 
+    [SerializeField]
     private float _xpCostPerSecond = 2f;
-    [SerializeField] 
+    [SerializeField]
     private float _laserDuration = 5f;
 
     private Coroutine _laserCoroutine;
