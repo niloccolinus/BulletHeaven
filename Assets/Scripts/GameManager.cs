@@ -110,6 +110,9 @@ public class GameManager : MonoBehaviour
         _level++;
         OnLevelUp?.Invoke(_level);
 
+        // Play level-up sound
+        SoundManager.PlaySound(SoundType.LEVELUP);
+
         // TODO : notify power ups with ui
         if (_level == 2)
         {
