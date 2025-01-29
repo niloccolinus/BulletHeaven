@@ -108,6 +108,9 @@ public class LaserBeamController : MonoBehaviour
         positions[0] = Vector3.zero;
         positions[1] = Vector3.zero;
 
+        // play laser sound
+        SoundManager.PlaySound(SoundType.LASER);
+
         _laserLine.SetPositions(positions);
 
         float currentLength = 0f;

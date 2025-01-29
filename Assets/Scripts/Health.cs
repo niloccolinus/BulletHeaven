@@ -100,6 +100,7 @@ public class Health : MonoBehaviour
         IsDead = true;
         _animator.SetBool("IsDying", IsDead);
         _satelliteManager.StopSatellites(); // make satellite fall using gravity
+        SoundManager.PlaySound(SoundType.DEATH); // play death sound
 
         CharacterController playerController = GetComponent<CharacterController>();
         if (playerController != null)

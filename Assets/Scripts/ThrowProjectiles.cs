@@ -23,9 +23,11 @@ public class ThrowProjectiles : MonoBehaviour
             GameObject instantiatedProjectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
             instantiatedProjectile.transform.parent = gameObject.transform;
 
+            // play firing sound
+            SoundManager.PlaySound(SoundType.FIRE);
+
             StartCoroutine(MoveProjectile(instantiatedProjectile));
         }
-
     }
 
     private IEnumerator MoveProjectile(GameObject projectile)
