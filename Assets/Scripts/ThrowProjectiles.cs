@@ -1,14 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
+// script currently not used
 public class ThrowProjectiles : MonoBehaviour
 {
     [SerializeField]
     private GameObject projectilePrefab;
     [SerializeField]
     private float projectileSpeed = 10f;
-    [SerializeField]
-    private float xpCost = 10f;
 
     private Vector3 spawnPos;
 
@@ -18,23 +17,17 @@ public class ThrowProjectiles : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            // check if player has enough xp
-            if (GameManager.Instance.PlayerXP >= xpCost)
-            {
-                // reduce xp
-                GameManager.Instance.PlayerXP -= xpCost;
+            // reduce xp
 
-                // shoot projectile
-                GameObject instantiatedProjectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
-                instantiatedProjectile.transform.parent = gameObject.transform;
+            // shoot projectile
+            GameObject instantiatedProjectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
+            instantiatedProjectile.transform.parent = gameObject.transform;
 
-                // play firing sound
-                SoundManager.PlaySound(SoundType.FIRE);
+            // play firing sound
+            SoundManager.PlaySound(SoundType.FIRE);
 
-                StartCoroutine(MoveProjectile(instantiatedProjectile));
-            }
+            StartCoroutine(MoveProjectile(instantiatedProjectile));
         }
-
     }
 
     private IEnumerator MoveProjectile(GameObject projectile)

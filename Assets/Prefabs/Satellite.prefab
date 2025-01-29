@@ -349,7 +349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _laserLine: {fileID: 6717992332611036485}
   _laserCollider: {fileID: 6230051551166971284}
-  _laserMaxLength: 1
+  _laserMaxLength: 0.5
   _laserExpandSpeed: 0.5
   _xpCostPerSecond: 10
   _laserDuration: 10

@@ -13,16 +13,16 @@ public class CharacterController : MonoBehaviour
     [SerializeField]
     private float _boostSpeed;
     [SerializeField]
-    private float _xpConsumptionRate = 10f;
-    [SerializeField]
     private InputActionReference _boostActionReference;
 
     private Animator animator;
+    private bool _boostUnlocked = false;
     private const string ANIMATOR_BOOL_IS_MOVING = "IsMoving";
     private const string ANIMATOR_BOOL_IS_RUNNING = "IsRunning";
 
     private void Start()
     {
+        GameManager.Instance.OnBoostUnlocked += UnlockBoost; // subscribe to boost unlock event
         animator = GetComponent<Animator>();
 
         _moveActionReference.action.Enable();
@@ -33,11 +33,10 @@ public class CharacterController : MonoBehaviour
     {
         float boost = 1;
 
-        // check if boost is activated and player has enough XP
-        if (_boostActionReference.action.phase == InputActionPhase.Performed && GameManager.Instance.PlayerXP > 0)
+        // check if boost is unlocked and activated
+        if (_boostUnlocked && _boostActionReference.action.phase == InputActionPhase.Performed)
         {
             boost = _boostSpeed;
-            GameManager.Instance.ConsumeXP(_xpConsumptionRate); // reduce XP while boosting
         }
 
         // read movement inputs
@@ -62,5 +61,10 @@ public class CharacterController : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(frameMovement3D.normalized, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
+    }
+
+    private void UnlockBoost(bool unlocked)
+    {
+        _boostUnlocked = unlocked;
     }
 }
