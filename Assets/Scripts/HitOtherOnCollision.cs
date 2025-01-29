@@ -26,6 +26,22 @@ public class HitOtherOnCollision : MonoBehaviour
 
     private float _timeSinceLastDamage = 0f;
 
+    private void Start()
+    {
+        if (_isEnemy && GameManager.Instance != null)
+        {
+            GameManager.Instance.OnEnemiesLevelUp += ScaleDamage;
+        }
+    }
+
+    private void ScaleDamage(float healthMultiplier, float damageMultiplier)
+    {
+        if (_isEnemy)
+        {
+            _damage = Mathf.RoundToInt(_damage * damageMultiplier);
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (!_isEnemy && collision.collider.CompareTag("Enemy"))
