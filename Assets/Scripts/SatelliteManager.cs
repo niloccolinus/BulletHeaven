@@ -101,8 +101,12 @@ public class SatelliteManager : MonoBehaviour
 
         foreach (var satellite in _satellites)
         {
-            var rb = satellite.GetComponent<Rigidbody>();
+            Rigidbody rb = satellite.GetComponent<Rigidbody>();
             rb.isKinematic = false;
+
+            // disable lasers
+            LaserBeamController laserBeam = satellite.GetComponent<LaserBeamController>();
+            laserBeam.StopLaser();
         }
     }
 }

@@ -26,9 +26,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Enemies")]
     [SerializeField]
-    private float _enemyHealthMultiplier = 1.1f; 
+    private float _enemyHealthMultiplier = 1.5f; 
     [SerializeField]
-    private float _enemyDamageMultiplier = 1.1f;
+    private float _enemyDamageMultiplier = 1.2f;
     [SerializeField]
     private int _maxEnemies;
     public int MaxEnemies { get => _maxEnemies; }
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     public event Action<int> OnSatelliteGained;
     public event Action<bool> OnBoostUnlocked;
     public event Action<bool> OnLaserUnlocked;
-    public event Action<float, float> OnLaserLevelUp; // interva, duration
+    public event Action<float, float> OnLaserLevelUp; // interval, duration
     public event Action<float, float> OnEnemiesLevelUp; // health, damage
 
     // properties to handle global data with events
