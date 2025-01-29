@@ -8,8 +8,8 @@ public enum SoundType
     FIRE,
     LASER,
     IMPACT,
-    DEATH,
     COLLECT,
+    DEATH,
     LEVELUP,
     WIN,
     CLICK
