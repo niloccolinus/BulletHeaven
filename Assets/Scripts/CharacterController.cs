@@ -67,4 +67,14 @@ public class CharacterController : MonoBehaviour
     {
         _boostUnlocked = unlocked;
     }
+
+    public void DisableMovement()
+    {
+        _moveActionReference.action.Disable();
+        _boostActionReference.action.Disable();
+        animator.SetBool(ANIMATOR_BOOL_IS_MOVING, false);
+        animator.SetBool(ANIMATOR_BOOL_IS_RUNNING, false);
+    }
+
+
 }

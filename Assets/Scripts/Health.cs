@@ -43,6 +43,8 @@ public class Health : MonoBehaviour
 
     public void LoseHealth(float amount)
     {
+        // Debug.Log($"{gameObject.name} took {amount} damage. Current Health: {_currentHealth}");
+
         _currentHealth -= amount;
         if (_currentHealth < 0)
         {
@@ -95,16 +97,15 @@ public class Health : MonoBehaviour
 
     private IEnumerator PlayerDeathSequence()
     {
-        // make robot parts fall (bad performances / requires mesh collider on every part)
-        // Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
-        // foreach (var rigidbody in rigidbodies)
-        // {
-        //    rigidbody.isKinematic = false;
-        // }
-
         IsDead = true;
         _animator.SetBool("IsDying", IsDead);
         _satelliteManager.StopSatellites(); // make satellite fall using gravity
+
+        CharacterController playerController = GetComponent<CharacterController>();
+        if (playerController != null)
+        {
+            playerController.DisableMovement();
+        }
 
         yield return new WaitForSeconds(1.5f);
 
