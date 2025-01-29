@@ -7,6 +7,8 @@ public class Health : MonoBehaviour
     private float _maxHealth = 100f;
     [SerializeField]
     private float _currentHealth;
+    [SerializeField]
+    private int _level;
 
     private Animator _animator;
     private SatelliteManager _satelliteManager;
@@ -23,6 +25,19 @@ public class Health : MonoBehaviour
         if (gameObject.CompareTag("Player") && GameManager.Instance != null)
         {
             GameManager.Instance.PlayerHealth = _currentHealth;
+        }
+        else if (gameObject.CompareTag("Enemy") && GameManager.Instance != null)
+        {
+            GameManager.Instance.OnEnemiesLevelUp += ScaleHealth;
+        }
+    }
+
+    private void ScaleHealth(float healthMultiplier, float damageMultiplier)
+    {
+        if (gameObject.CompareTag("Enemy"))
+        {
+            _maxHealth *= healthMultiplier;
+            _currentHealth = _maxHealth; // reset life to max
         }
     }
 
@@ -61,6 +76,11 @@ public class Health : MonoBehaviour
 
     private void Die()
     {
+        if (gameObject.CompareTag("Enemy") && GameManager.Instance != null)
+        {
+            GameManager.Instance.OnEnemiesLevelUp -= ScaleHealth;
+        }
+
         if (gameObject.CompareTag("Player"))
         {
             // if player is dead
@@ -97,9 +117,6 @@ public class Health : MonoBehaviour
     private IEnumerator EnemyDeathSequence()
     {
         IsDead = true;
-
-        // play vfx or animation
-
 
         // disable meshes & collider
         var collider = GetComponent<Collider>();

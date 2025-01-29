@@ -14,35 +14,54 @@ public class LaserBeamController : MonoBehaviour
     private float _laserExpandSpeed = 5f;
     [SerializeField]
     private float _laserDuration = 5f;
+    [SerializeField]
+    private float _laserInterval = 5f;
 
     private Coroutine _laserCoroutine;
     private bool _laserUnlocked = false;
+    private bool _autoFireActive = true;
 
 
     void Start()
     {
         GameManager.Instance.OnLaserUnlocked += UnlockLaser; // subscribe to laser unlocked event
+        GameManager.Instance.OnLaserLevelUp += LevelUpLaser;
+
         _laserCollider.enabled = false;
+
+        if (_autoFireActive)
+        {
+            StartCoroutine(AutoFireLaser()); // start automatic firing loop
+        }
     }
 
     void Update()
     {
-        // start laser if player presses space && laser is unlocked
-        if (Input.GetKeyDown(KeyCode.Space) && _laserUnlocked)
+        if (!_autoFireActive && _laserUnlocked) // allows to fire laser with spacebar
         {
-            StartLaser();
-        }
+            // start laser if player presses space && laser is unlocked
+            if (Input.GetKeyDown(KeyCode.Space) && _laserUnlocked)
+            {
+                StartLaser();
+            }
 
-        // stop laser if button released
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            StopLaser();
+            // stop laser if button released
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                StopLaser();
+            }
         }
     }
 
     private void UnlockLaser(bool unlocked)
     {
         _laserUnlocked = unlocked;
+    }
+    
+    private void LevelUpLaser(float intervalAmount, float durationAmount)
+    {
+        _laserInterval -= intervalAmount;
+        _laserDuration += durationAmount;
     }
 
     private void StartLaser()
@@ -64,6 +83,20 @@ public class LaserBeamController : MonoBehaviour
             StopCoroutine(_laserCoroutine);
         }
         _laserCoroutine = StartCoroutine(RetractLaser());
+    }
+
+    private IEnumerator AutoFireLaser()
+    {
+        while (true) // infinite loop to fire laser at intervals
+        {
+            yield return new WaitForSeconds(_laserInterval);
+
+            if (_laserUnlocked)
+            {
+                Debug.Log("shoot laser");
+                StartLaser();
+            }
+        }
     }
 
     private IEnumerator ShootLaser()

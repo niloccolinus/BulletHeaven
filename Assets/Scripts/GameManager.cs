@@ -6,20 +6,29 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    [Header("Health & Score")]
     [SerializeField]
     private int _totalScore;
     [SerializeField]
     private float _playerHealth;
+
+    [Header("Levels & Power Ups")]
     [SerializeField]
     private float _playerXP;
     [SerializeField]
     private int _level = 1;
     [SerializeField]
     private float _xpThreshold = 100f; // xp needed to level up
-    [SerializeField] 
+    [SerializeField]
     private bool _boostUnlocked = false;
     [SerializeField]
     private bool _laserUnlocked = false;
+
+    [Header("Enemies")]
+    [SerializeField]
+    private float _enemyHealthMultiplier = 1.1f; 
+    [SerializeField]
+    private float _enemyDamageMultiplier = 1.1f;
     [SerializeField]
     private int _maxEnemies;
     public int MaxEnemies { get => _maxEnemies; }
@@ -32,7 +41,8 @@ public class GameManager : MonoBehaviour
     public event Action<int> OnSatelliteGained;
     public event Action<bool> OnBoostUnlocked;
     public event Action<bool> OnLaserUnlocked;
-
+    public event Action<float, float> OnLaserLevelUp; // interva, duration
+    public event Action<float, float> OnEnemiesLevelUp; // health, damage
 
     // properties to handle global data with events
     public int TotalScore
@@ -68,7 +78,7 @@ public class GameManager : MonoBehaviour
                 LevelUp();
             }
 
-            OnXPChanged?.Invoke(_playerXP); 
+            OnXPChanged?.Invoke(_playerXP);
         }
     }
 
@@ -100,9 +110,15 @@ public class GameManager : MonoBehaviour
         PlayerXP = 0f;
         _level = 1;
         _boostUnlocked = false;
+        _laserUnlocked = false;
 
         // update the UI
         UIManager.Instance.ResetUI();
+    }
+
+    private void ScaleEnemiesWithLevel()
+    {
+        OnEnemiesLevelUp?.Invoke(_enemyHealthMultiplier, _enemyDamageMultiplier);
     }
 
     private void LevelUp()
@@ -112,14 +128,16 @@ public class GameManager : MonoBehaviour
 
         // Play level-up sound
         SoundManager.PlaySound(SoundType.LEVELUP);
+        
+        ScaleEnemiesWithLevel();
 
         // TODO : notify power ups with ui
         if (_level == 2)
         {
-            Debug.Log("You unlocked the boost! Press MAJ while moving");
+            Debug.Log("You unlocked the boost! Press SHIFT while moving.");
 
             _boostUnlocked = true;
-            OnBoostUnlocked?.Invoke(true); 
+            OnBoostUnlocked?.Invoke(true);
         }
         else if (_level > 2 && _level < 11)
         {
@@ -127,12 +145,16 @@ public class GameManager : MonoBehaviour
 
             OnSatelliteGained?.Invoke(1);
         }
-        else if (_level >= 11)
+        else if (_level == 11)
         {
-            Debug.Log("You unlocked the laser! Press Spacebar");
-
+            Debug.Log("You unlocked the laser!");
             _laserUnlocked = true;
-            OnLaserUnlocked?.Invoke(true); 
+            OnLaserUnlocked?.Invoke(true);
+        }
+        else if (_level > 11)
+        {
+            Debug.Log("Your laser has leveled up!");
+            OnLaserLevelUp?.Invoke(0.3f, 0.5f); // interval, duration (could be randomized)
         }
     }
 

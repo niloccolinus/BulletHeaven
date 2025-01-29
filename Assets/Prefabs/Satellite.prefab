@@ -351,8 +351,8 @@ MonoBehaviour:
   _laserCollider: {fileID: 6230051551166971284}
   _laserMaxLength: 0.5
   _laserExpandSpeed: 0.5
-  _xpCostPerSecond: 10
   _laserDuration: 10
+  _laserInterval: 10
 --- !u!114 &1377098961143314721
 MonoBehaviour:
   m_ObjectHideFlags: 0
