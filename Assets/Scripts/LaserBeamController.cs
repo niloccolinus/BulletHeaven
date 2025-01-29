@@ -13,40 +13,36 @@ public class LaserBeamController : MonoBehaviour
     [SerializeField]
     private float _laserExpandSpeed = 5f;
     [SerializeField]
-    private float _xpCostPerSecond = 2f;
-    [SerializeField]
     private float _laserDuration = 5f;
 
     private Coroutine _laserCoroutine;
-    private bool _isHolding = false;
+    private bool _laserUnlocked = false;
+
 
     void Start()
     {
+        GameManager.Instance.OnLaserUnlocked += UnlockLaser; // subscribe to laser unlocked event
         _laserCollider.enabled = false;
     }
 
     void Update()
     {
-        // start laser if player presses space and has enough xp
-        if (Input.GetKeyDown(KeyCode.Space) && GameManager.Instance.PlayerXP >= _xpCostPerSecond)
+        // start laser if player presses space && laser is unlocked
+        if (Input.GetKeyDown(KeyCode.Space) && _laserUnlocked)
         {
             StartLaser();
         }
 
-        if (Input.GetKey(KeyCode.Space))
-        {
-            _isHolding = true;
-        }
-        else
-        {
-            _isHolding = false;
-        }
-
-        // stop laser if button released or no xp left
-        if (Input.GetKeyUp(KeyCode.Space) || GameManager.Instance.PlayerXP <= 0)
+        // stop laser if button released
+        if (Input.GetKeyUp(KeyCode.Space))
         {
             StopLaser();
         }
+    }
+
+    private void UnlockLaser(bool unlocked)
+    {
+        _laserUnlocked = unlocked;
     }
 
     private void StartLaser()
@@ -57,7 +53,6 @@ public class LaserBeamController : MonoBehaviour
             StopCoroutine(_laserCoroutine);
         }
 
-        GameManager.Instance.PlayerXP -= _xpCostPerSecond;
         _laserCoroutine = StartCoroutine(ShootLaser());
     }
 
@@ -95,13 +90,6 @@ public class LaserBeamController : MonoBehaviour
 
             UpdateCollider(currentLength);
 
-            yield return null;
-        }
-
-        // keep consuming xp
-        while (_isHolding && GameManager.Instance.PlayerXP > 0)
-        {
-            GameManager.Instance.PlayerXP -= _xpCostPerSecond * Time.deltaTime;
             yield return null;
         }
 

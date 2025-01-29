@@ -9,9 +9,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject _gameOverPanel;
     [SerializeField]
+    private Image _healthSlider;
+    [SerializeField]
     private Image _xpSlider;
     [SerializeField]
-    private Image _healthSlider;
+    private TextMeshProUGUI _level;
     [SerializeField]
     private TextMeshProUGUI _score;
     [SerializeField]
@@ -37,6 +39,7 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnScoreChanged += UpdateScore;
         GameManager.Instance.OnHealthChanged += UpdateHealth;
         GameManager.Instance.OnXPChanged += UpdateXP;
+        GameManager.Instance.OnLevelUp += UpdateLevel;
     }
 
     private void OnDestroy()
@@ -45,6 +48,7 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnScoreChanged -= UpdateScore;
         GameManager.Instance.OnHealthChanged -= UpdateHealth;
         GameManager.Instance.OnXPChanged -= UpdateXP;
+        GameManager.Instance.OnLevelUp -= UpdateLevel;
     }
 
     private void InitializeUI()
@@ -69,6 +73,11 @@ public class UIManager : MonoBehaviour
         _xpSlider.fillAmount = xp / 100f;
     }
 
+    private void UpdateLevel(int level)
+    {
+        _level.text = "Level " + level;
+    }
+
     public void ShowGameOver()
     {
         _gameOverPanel.SetActive(true);
@@ -79,6 +88,7 @@ public class UIManager : MonoBehaviour
         UpdateScore(0);
         UpdateHealth(100f);
         UpdateXP(0f);
+        UpdateLevel(1);
         _gameOverPanel.SetActive(false);
     }
 }
