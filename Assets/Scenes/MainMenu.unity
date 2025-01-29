@@ -927,8 +927,13 @@ MonoBehaviour:
   _xpThreshold: 100
   _boostUnlocked: 0
   _laserUnlocked: 0
+
   _enemyHealthMultiplier: 1.1
   _enemyDamageMultiplier: 1.1
+
+  _enemyHealthMultiplier: 1.7
+  _enemyDamageMultiplier: 1.2
+
   _maxEnemies: 20
 --- !u!1 &1709696583
 GameObject:

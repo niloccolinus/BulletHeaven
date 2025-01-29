@@ -22,7 +22,7 @@ public class LaserBeamController : MonoBehaviour
     private bool _autoFireActive = true;
 
 
-    void Start()
+    private void Start()
     {
         GameManager.Instance.OnLaserUnlocked += UnlockLaser; // subscribe to laser unlocked event
         GameManager.Instance.OnLaserLevelUp += LevelUpLaser;
@@ -35,7 +35,7 @@ public class LaserBeamController : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (!_autoFireActive && _laserUnlocked) // allows to fire laser with spacebar
         {
@@ -75,7 +75,7 @@ public class LaserBeamController : MonoBehaviour
         _laserCoroutine = StartCoroutine(ShootLaser());
     }
 
-    private void StopLaser()
+    public void StopLaser()
     {
         // stop any existing laser coroutine before retracting
         if (_laserCoroutine != null)
@@ -93,7 +93,6 @@ public class LaserBeamController : MonoBehaviour
 
             if (_laserUnlocked)
             {
-                Debug.Log("shoot laser");
                 StartLaser();
             }
         }
