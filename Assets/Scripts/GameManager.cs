@@ -13,26 +13,23 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float _playerXP;
     [SerializeField]
+    private int _level = 1;
+    [SerializeField]
+    private float _xpThreshold = 100f; // xp needed to level up
+    [SerializeField] 
+    private bool _boostUnlocked = false;
+    [SerializeField]
     private int _maxEnemies;
     public int MaxEnemies { get => _maxEnemies; }
+
 
     public event Action<int> OnScoreChanged;
     public event Action<float> OnHealthChanged;
     public event Action<float> OnXPChanged;
+    public event Action<int> OnLevelUp;
+    public event Action<bool> OnBoostUnlocked;
+    public event Action<int> OnSatelliteGained;
 
-    private void Awake()
-    {
-        // make sure there is only one instance of GameManager
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject); // destroy this instance if another one exists
-            return;
-        }
-
-        Instance = this;
-        // make this object persistent between scenes
-        DontDestroyOnLoad(gameObject);
-    }
 
     // properties to handle global data with events
     public int TotalScore
@@ -60,9 +57,30 @@ public class GameManager : MonoBehaviour
         get => _playerXP;
         set
         {
-            _playerXP = value;
-            OnXPChanged?.Invoke(_playerXP);
+            _playerXP = Mathf.Clamp(value, 0, _xpThreshold);
+
+            if (_playerXP >= _xpThreshold)
+            {
+                _playerXP = 0; // reset xp
+                LevelUp();
+            }
+
+            OnXPChanged?.Invoke(_playerXP); 
         }
+    }
+
+    private void Awake()
+    {
+        // make sure there is only one instance of GameManager
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject); // destroy this instance if another one exists
+            return;
+        }
+
+        Instance = this;
+        // make this object persistent between scenes
+        DontDestroyOnLoad(gameObject);
     }
 
     public void TriggerGameOver()
@@ -77,14 +95,28 @@ public class GameManager : MonoBehaviour
         TotalScore = 0;
         PlayerHealth = 100f;
         PlayerXP = 0f;
+        _level = 1;
+        _boostUnlocked = false;
 
         // update the UI
         UIManager.Instance.ResetUI();
     }
 
-    public void ConsumeXP(float xpToConsume)
+    private void LevelUp()
     {
-        // reduce XP based on the consumption rate & ensure XP does not drop below zero
-        GameManager.Instance.PlayerXP = Mathf.Max(0, GameManager.Instance.PlayerXP - xpToConsume * Time.deltaTime);
+        _level++;
+        // TODO : add UI to show +1 level
+        OnLevelUp?.Invoke(_level);
+
+        if (_level == 2)
+        {
+            _boostUnlocked = true;
+            OnBoostUnlocked?.Invoke(true); // notify CharacterController
+        }
+        else if (_level > 2)
+        {
+            OnSatelliteGained?.Invoke(1); // notify SatelliteManager to add a satellite
+        }
     }
+
 }

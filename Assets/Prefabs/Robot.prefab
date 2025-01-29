@@ -1466,9 +1466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementSpeed: 5
   _moveActionReference: {fileID: 6800092525090821347, guid: b60ed40318ad0bb41b96b9609ca0ed14, type: 3}
-  _headRigidbody: {fileID: 0}
-  _boostSpeed: 6
-  _xpConsumptionRate: 10
+  _boostSpeed: 3
   _boostActionReference: {fileID: -6117572893210435004, guid: b60ed40318ad0bb41b96b9609ca0ed14, type: 3}
 --- !u!114 &1613378965928439190
 MonoBehaviour:
@@ -1482,7 +1480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e26a8ada2e97344e9f899cb802ffecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _satelliteCount: 3
+  _satelliteCount: 1
   _satellitePrefab: {fileID: 8118963732262246295, guid: 5a267822f4bdd3345a43681f6d08cafb, type: 3}
   _satellitesParent: {fileID: 0}
   _maxSatellites: 10

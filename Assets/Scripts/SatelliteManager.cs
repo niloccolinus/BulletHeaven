@@ -5,7 +5,7 @@ using System.Collections;
 public class SatelliteManager : MonoBehaviour
 {
     [SerializeField]
-    private int _satelliteCount = 3;
+    private int _satelliteCount = 1;
     public int SatelliteCount 
     {
         get => _satelliteCount; 
@@ -27,6 +27,7 @@ public class SatelliteManager : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.OnLevelUp += AddSatellite; // subscribe to level up event
         UpdateSatellites();
     }
 
@@ -40,6 +41,15 @@ public class SatelliteManager : MonoBehaviour
         // check if app is playing to avoid errors
         if (Application.isPlaying)
         {
+            UpdateSatellites();
+        }
+    }
+
+    private void AddSatellite(int amount)
+    {
+        if (_satelliteCount < _maxSatellites)
+        {
+            _satelliteCount += amount;
             UpdateSatellites();
         }
     }
