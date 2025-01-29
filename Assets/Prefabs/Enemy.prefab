@@ -656,7 +656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _objectScoring: 100
-  _objectXP: 10
+  _xpCollectablePrefab: {fileID: 4510951735512833629, guid: 1aa73eb4b0616914d9a2f1d5d0063e13, type: 3}
 --- !u!135 &2997721834552420144
 SphereCollider:
   m_ObjectHideFlags: 0

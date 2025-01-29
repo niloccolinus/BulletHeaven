@@ -1464,7 +1464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1191362ff548f064191bc468cd138017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movementSpeed: 5
+  _movementSpeed: 6
   _moveActionReference: {fileID: 6800092525090821347, guid: b60ed40318ad0bb41b96b9609ca0ed14, type: 3}
   _boostSpeed: 3
   _boostActionReference: {fileID: -6117572893210435004, guid: b60ed40318ad0bb41b96b9609ca0ed14, type: 3}
@@ -1499,4 +1499,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _currentHealth: 0
+  _level: 0
   IsDead: 0

@@ -5,16 +5,12 @@ public class Scoring : MonoBehaviour
     [SerializeField]
     private int _objectScoring;
     [SerializeField]
-    private float _objectXP;
+    private GameObject _xpCollectablePrefab;
 
     public void GrantRewards()
     {
-        // add score & xp to game manager
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.TotalScore += _objectScoring;
-            GameManager.Instance.PlayerXP += _objectXP;
-        }
+        GameManager.Instance.TotalScore += _objectScoring;
+        Instantiate(_xpCollectablePrefab, transform.position, Quaternion.identity);
     }
-
 }
+
