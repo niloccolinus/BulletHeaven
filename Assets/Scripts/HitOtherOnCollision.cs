@@ -78,6 +78,9 @@ public class HitOtherOnCollision : MonoBehaviour
         // play VFX at the impact position
         Instantiate(_impactEffect, impactPosition, Quaternion.identity);
 
+        // play sound on satellite attack
+        SoundManager.PlaySound(SoundType.FIRE);
+
         // apply push to the enemy
         Rigidbody enemyRigidbody = collision.collider.GetComponent<Rigidbody>();
         Vector3 pushDirection = (collision.transform.position - transform.position).normalized;
@@ -106,6 +109,9 @@ public class HitOtherOnCollision : MonoBehaviour
         // deal damage to the player
         Health playerHealth = collision.collider.GetComponent<Health>();
         playerHealth?.LoseHealth(_damage);
+
+        // play sound on collision
+        SoundManager.PlaySound(SoundType.IMPACT);
     }
 
     private IEnumerator ApplyPushForce(Rigidbody enemyRigidbody, Vector3 pushDirection)
