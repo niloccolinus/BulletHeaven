@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] 
     private bool _boostUnlocked = false;
     [SerializeField]
+    private bool _laserUnlocked = false;
+    [SerializeField]
     private int _maxEnemies;
     public int MaxEnemies { get => _maxEnemies; }
 
@@ -27,8 +29,9 @@ public class GameManager : MonoBehaviour
     public event Action<float> OnHealthChanged;
     public event Action<float> OnXPChanged;
     public event Action<int> OnLevelUp;
-    public event Action<bool> OnBoostUnlocked;
     public event Action<int> OnSatelliteGained;
+    public event Action<bool> OnBoostUnlocked;
+    public event Action<bool> OnLaserUnlocked;
 
 
     // properties to handle global data with events
@@ -105,17 +108,28 @@ public class GameManager : MonoBehaviour
     private void LevelUp()
     {
         _level++;
-        // TODO : add UI to show +1 level
         OnLevelUp?.Invoke(_level);
 
+        // TODO : notify power ups with ui
         if (_level == 2)
         {
+            Debug.Log("You unlocked the boost! Press MAJ while moving");
+
             _boostUnlocked = true;
-            OnBoostUnlocked?.Invoke(true); // notify CharacterController
+            OnBoostUnlocked?.Invoke(true); 
         }
-        else if (_level > 2)
+        else if (_level > 2 && _level < 11)
         {
-            OnSatelliteGained?.Invoke(1); // notify SatelliteManager to add a satellite
+            Debug.Log("You earned 1 satellite!");
+
+            OnSatelliteGained?.Invoke(1);
+        }
+        else if (_level >= 11)
+        {
+            Debug.Log("You unlocked the laser! Press Spacebar");
+
+            _laserUnlocked = true;
+            OnLaserUnlocked?.Invoke(true); 
         }
     }
 

@@ -16,16 +16,19 @@ public class LaserBeamController : MonoBehaviour
     private float _laserDuration = 5f;
 
     private Coroutine _laserCoroutine;
+    private bool _laserUnlocked = false;
+
 
     void Start()
     {
+        GameManager.Instance.OnLaserUnlocked += UnlockLaser; // subscribe to laser unlocked event
         _laserCollider.enabled = false;
     }
 
     void Update()
     {
-        // start laser if player presses space
-        if (Input.GetKeyDown(KeyCode.Space))
+        // start laser if player presses space && laser is unlocked
+        if (Input.GetKeyDown(KeyCode.Space) && _laserUnlocked)
         {
             StartLaser();
         }
@@ -35,6 +38,11 @@ public class LaserBeamController : MonoBehaviour
         {
             StopLaser();
         }
+    }
+
+    private void UnlockLaser(bool unlocked)
+    {
+        _laserUnlocked = unlocked;
     }
 
     private void StartLaser()

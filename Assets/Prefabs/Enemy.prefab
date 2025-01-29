@@ -620,7 +620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4352de81fcf73e4439e6e4f6eb9cd9fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 20
+  _maxHealth: 10
   _currentHealth: 0
   IsDead: 0
 --- !u!114 &6539389363230691754
@@ -635,7 +635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e33ce44a400a984eb0452aa2c5a4832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 10
+  _damage: 5
   _pushForce: 0
   _pushDuration: 0.2
   _destroyItself: 0

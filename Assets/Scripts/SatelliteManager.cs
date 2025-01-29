@@ -27,7 +27,7 @@ public class SatelliteManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.OnLevelUp += AddSatellite; // subscribe to level up event
+        GameManager.Instance.OnSatelliteGained += AddSatellite; // subscribe to satellite gain event
         UpdateSatellites();
     }
 
