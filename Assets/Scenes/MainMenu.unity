@@ -553,8 +553,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: <cspace=10px>PLAY</cspace>
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 68a0efa21e8cfbe44a99fccaf235af9e, type: 2}
-  m_sharedMaterial: {fileID: 3189249481683608182, guid: 68a0efa21e8cfbe44a99fccaf235af9e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1b41a485b9f783c4a97e0d36983dcdc9, type: 2}
+  m_sharedMaterial: {fileID: -6071175346085441286, guid: 1b41a485b9f783c4a97e0d36983dcdc9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
